@@ -8,38 +8,69 @@
 
 
     <SeekBar
-        android:id="@+id/seekBar"
+        android:id="@+id/progressBar"
         android:layout_width="352dp"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/imageView"
+        android:layout_above="@+id/playPause"
         android:layout_centerHorizontal="true"
         android:progressBackgroundTint="@color/grisClair"
         android:progressTint="@color/grisClair"
         android:thumbTint="@color/grisClair" />
 
-    <ImageView
-        android:id="@+id/imageView"
+    <ImageButton
+        android:id="@+id/playPause"
         android:layout_width="82dp"
         android:layout_height="73dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="36dp"
-        app:srcCompat="@drawable/playbutton" />
+        android:onClick="onClickPlay"
+        android:background="@drawable/playbutton" />
 
-    <ImageView
-        android:id="@+id/imageView2"
+    <ImageButton
+        android:id="@+id/backPlayer"
         android:layout_width="63dp"
         android:layout_height="74dp"
-        android:layout_alignTop="@+id/imageView"
-        android:layout_toStartOf="@+id/imageView"
+        android:layout_alignTop="@+id/playPause"
+        android:layout_toStartOf="@+id/playPause"
         android:rotation="180"
-        app:srcCompat="@drawable/nextbutton" />
+        android:background="@drawable/nextbutton" />
 
-    <ImageView
-        android:id="@+id/imageView3"
+    <ImageButton
+        android:id="@+id/forwardPlayer"
         android:layout_width="63dp"
         android:layout_height="74dp"
-        android:layout_alignTop="@+id/imageView"
-        android:layout_toEndOf="@+id/imageView"
-        app:srcCompat="@drawable/nextbutton" />
+        android:layout_alignTop="@+id/playPause"
+        android:layout_toEndOf="@+id/playPause"
+        android:background="@drawable/nextbutton" />
+
+    <ImageView
+        android:id="@+id/musicImage"
+        android:layout_width="238dp"
+        android:layout_height="238dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="133dp"
+        android:background="@color/grisFoncé"
+        android:padding="50dp"
+        app:srcCompat="@drawable/musicnote" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/progressBar"
+        android:layout_below="@+id/progressBar"
+        android:textColor="@color/grisClair"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/progressBar"
+        android:textColor="@color/grisClair"
+        android:text="TextView" />
+
 </RelativeLayout>
