@@ -1,6 +1,7 @@
 package com.example.isen.playeraudio;
 
 import android.Manifest;
+import android.arch.persistence.room.Room;
 import android.content.ComponentName;
 import android.content.ContentResolver;
 import android.content.ContentUris;
@@ -26,6 +27,7 @@ import java.util.Comparator;
 import com.example.isen.playeraudio.SongService.MusicBinder;
 
 public class ListActivity extends BaseActivity{
+    private static Context sContext;
     private ArrayList<Song> songList;
     private ListView songView;
     //private SongService musicSrv;
@@ -36,6 +38,7 @@ public class ListActivity extends BaseActivity{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        sContext = getApplicationContext();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
         while (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
@@ -43,6 +46,7 @@ public class ListActivity extends BaseActivity{
             //return;
         }
 
+        DatabaseHelper db = new DatabaseHelper();
         songView = findViewById(R.id.song_list);
         songList = new ArrayList<>();
         getSongList();
@@ -125,6 +129,10 @@ public class ListActivity extends BaseActivity{
             } while (musicCursor.moveToNext());
         }
     }
+    public static Context getContext() {
+        return sContext;
+    }
+
 
     @Override
     protected void onDestroy() {
