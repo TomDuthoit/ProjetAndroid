@@ -60,8 +60,5 @@ public class Player extends AppCompatActivity {
             mediaPlayer.stop();
         }*/
     }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> master
+

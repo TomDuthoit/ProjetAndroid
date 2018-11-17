@@ -64,8 +64,8 @@ public class ListActivity extends AppCompatActivity{
     }
 
     public void songPicked(View view){
-        //musicSrv.setSong(Integer.parseInt(view.getTag().toString()));
-        //musicSrv.playSong();
+        Intent intent = new Intent(this,Playergit.class);
+        startActivity(intent);
     }
 
     //connect to the service
