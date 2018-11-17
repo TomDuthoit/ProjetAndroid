@@ -67,19 +67,19 @@ public class ListActivity extends BaseActivity{
     }
 
     public void songPicked(View view){
-        Song playMusic = songList.get(Integer.parseInt(view.getTag().toString()));
-        long currSong = playMusic.getID();
+        currSong = songList.get(Integer.parseInt(view.getTag().toString()));
+
         Uri trackUri = ContentUris.withAppendedId(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
-                currSong);
-        if(null!= mediaPlayer && songPlaying!=playMusic){
+                currSong.getID());
+        if(null!= mediaPlayer && songPlaying!=currSong){
             mediaPlayer.stop();
             playPause = false;
             mediaPlayer = MediaPlayer.create(this,trackUri);
-            songPlaying = playMusic;
+            songPlaying = currSong;
         }
         if(null== mediaPlayer && songPlaying== null){
             mediaPlayer = MediaPlayer.create(this,trackUri);
-            songPlaying = playMusic;
+            songPlaying = currSong;
         }
         Intent intent = new Intent(this,Player.class);
         startActivity(intent);

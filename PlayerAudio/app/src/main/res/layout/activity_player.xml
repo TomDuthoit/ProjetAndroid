@@ -73,4 +73,29 @@
         android:textColor="@color/grisClair"
         android:text="@string/defaultTime" />
 
+    <TextView
+        android:id="@+id/player_title"
+        android:layout_width="340dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:textAlignment="center"
+        android:layout_marginBottom="160dp"
+        android:ellipsize="marquee"
+        android:text="@string/defaultTitle"
+        android:textColor="@color/grisClair"
+        android:textSize="20dp" />
+
+    <TextView
+        android:id="@+id/player_artist"
+        android:layout_width="203dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:textAlignment="center"
+        android:ellipsize="marquee"
+        android:layout_marginBottom="130dp"
+        android:text="@string/defaultArtist"
+        android:textColor="@color/grisClair" />
+
 </RelativeLayout>

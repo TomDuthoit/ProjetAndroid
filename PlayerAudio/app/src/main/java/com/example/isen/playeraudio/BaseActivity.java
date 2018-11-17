@@ -6,4 +6,5 @@ import android.support.v7.app.AppCompatActivity;
 public class BaseActivity extends AppCompatActivity {
     protected static MediaPlayer mediaPlayer;
     protected static boolean playPause = false;
+    protected static Song currSong;
 }
