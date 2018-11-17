@@ -45,7 +45,7 @@ public class SongAdapter extends BaseAdapter {
         Song currMusic = musics.get(position);
         titleView.setText(currMusic.getTitle());
         artistView.setText(currMusic.getArtist());
-        //musicLay.setTag(position);
+        musicLay.setTag(position);
         return musicLay;
     }
 

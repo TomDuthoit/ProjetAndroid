@@ -3,11 +3,13 @@ package com.example.isen.playeraudio;
 import android.Manifest;
 import android.content.ComponentName;
 import android.content.ContentResolver;
+import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -30,6 +32,7 @@ public class ListActivity extends BaseActivity{
     //private Intent playIntent;
     private boolean musicBound=false;
     private static int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE;
+    private static Song songPlaying;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +67,20 @@ public class ListActivity extends BaseActivity{
     }
 
     public void songPicked(View view){
-
+        Song playMusic = songList.get(Integer.parseInt(view.getTag().toString()));
+        long currSong = playMusic.getID();
+        Uri trackUri = ContentUris.withAppendedId(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
+                currSong);
+        if(null!= mediaPlayer && songPlaying!=playMusic){
+            mediaPlayer.stop();
+            playPause = false;
+            mediaPlayer = MediaPlayer.create(this,trackUri);
+            songPlaying = playMusic;
+        }
+        if(null== mediaPlayer && songPlaying== null){
+            mediaPlayer = MediaPlayer.create(this,trackUri);
+            songPlaying = playMusic;
+        }
         Intent intent = new Intent(this,Player.class);
         startActivity(intent);
     }
