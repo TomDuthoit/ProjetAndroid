@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">PlayerAudio</string>
+    <string name="defaultTime">0:00</string>
 </resources>
