@@ -17,10 +17,8 @@ public class Player extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_player);
-        if(mediaPlayer == null){
-            mediaPlayer = MediaPlayer.create(this,R.raw.powerwolf);
-            mediaPlayer.start();
-        }
+        mediaPlayer.start();
+        playPause = true;
 
         progressBar = findViewById(R.id.progressBar);
         progressBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -56,7 +54,10 @@ public class Player extends BaseActivity {
                                 progressBar.setProgress(0);
                                 progressBar.setMax(mediaPlayer.getDuration());
                                 progressBar.setProgress(mediaPlayer.getCurrentPosition());
-
+                                TextView title = findViewById(R.id.player_title);
+                                TextView artist = findViewById(R.id.player_artist);
+                                title.setText(currSong.getTitle());
+                                artist.setText(currSong.getArtist());
                             }
                         });
                     }
