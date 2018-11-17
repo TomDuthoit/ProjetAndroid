@@ -7,10 +7,8 @@ import android.view.View;
 import android.widget.TextView;
 
 
-public class Player extends AppCompatActivity {
+public class Player extends BaseActivity {
 
-    private static boolean playPause = false;
-    private static MediaPlayer mediaPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,9 +16,9 @@ public class Player extends AppCompatActivity {
         setContentView(R.layout.activity_player);
         if(mediaPlayer == null){
             mediaPlayer = MediaPlayer.create(this,R.raw.powerwolf);
-            TextView timeEnd = findViewById(R.id.timeEnd);
-            timeEnd.setText(msToString(mediaPlayer.getDuration()));
         }
+        TextView timeEnd = findViewById(R.id.timeEnd);
+        timeEnd.setText(msToString(mediaPlayer.getDuration()));
         if(playPause){
             findViewById(R.id.playPause).setBackgroundResource(R.drawable.pausebutton);
         }

@@ -23,7 +23,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import com.example.isen.playeraudio.SongService.MusicBinder;
 
-public class ListActivity extends AppCompatActivity{
+public class ListActivity extends BaseActivity{
     private ArrayList<Song> songList;
     private ListView songView;
     //private SongService musicSrv;
@@ -35,9 +35,9 @@ public class ListActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
-        if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+        while (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE);
-            return;
+            //return;
         }
 
         songView = findViewById(R.id.song_list);
@@ -64,7 +64,8 @@ public class ListActivity extends AppCompatActivity{
     }
 
     public void songPicked(View view){
-        Intent intent = new Intent(this,Playergit.class);
+
+        Intent intent = new Intent(this,Player.class);
         startActivity(intent);
     }
 
