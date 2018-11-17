@@ -6,10 +6,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 public class Player extends BaseActivity {
     protected Thread thread;
+    protected SeekBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,6 +21,23 @@ public class Player extends BaseActivity {
             mediaPlayer = MediaPlayer.create(this,R.raw.powerwolf);
             mediaPlayer.start();
         }
+
+        progressBar = findViewById(R.id.progressBar);
+        progressBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            int progressChangedValue = 0;
+
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                progressChangedValue = progress;
+            }
+
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                // TODO Auto-generated method stub
+            }
+
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                mediaPlayer.seekTo(progressChangedValue);
+            }
+        });
 
         thread = new Thread() {
 
@@ -34,7 +53,6 @@ public class Player extends BaseActivity {
                                 TextView timeNow = findViewById(R.id.timeNow);
                                 timeEnd.setText(msToString(mediaPlayer.getDuration()));
                                 timeNow.setText(msToString(mediaPlayer.getCurrentPosition()));
-                                SeekBar progressBar = findViewById(R.id.progressBar);
                                 progressBar.setProgress(0);
                                 progressBar.setMax(mediaPlayer.getDuration());
                                 progressBar.setProgress(mediaPlayer.getCurrentPosition());
