@@ -22,10 +22,12 @@ import java.util.Random;
 
 public class Player extends BaseActivity  implements SongGetter {
     protected Thread thread;
+    protected Thread thread2;
     protected SeekBar progressBar;
     private List<Song> listSong;
     private int songIndex;
     public static boolean random = false;
+    public static boolean loop = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +38,16 @@ public class Player extends BaseActivity  implements SongGetter {
 
         mediaPlayer.start();
         playPause = true;
+        if(random){
+            findViewById(R.id.player_random).setBackgroundResource(R.drawable.randomized);
+        }else {
+            findViewById(R.id.player_random).setBackgroundResource(R.drawable.random);
+        }
+        if(loop){
+            findViewById(R.id.player_loop).setBackgroundResource(R.drawable.looping);
+        }else {
+            findViewById(R.id.player_loop).setBackgroundResource(R.drawable.loop);
+        }
 
         progressBar = findViewById(R.id.progressBar);
         progressBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -84,6 +96,36 @@ public class Player extends BaseActivity  implements SongGetter {
         };
 
         thread.start();
+
+        thread2 = new Thread() {
+
+            @Override
+            public void run() {
+                try {
+                    while (!thread2.isInterrupted()) {
+                        Thread.sleep(50);
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                if(loop){
+                                    mediaPlayer.setLooping(true);
+                                }else {
+                                    mediaPlayer.setLooping(false);
+                                }
+                                if(mediaPlayer.getCurrentPosition() >= mediaPlayer.getDuration() -51
+                                        && !mediaPlayer.isLooping()){
+                                    onClickNext(findViewById(R.id.forwardPlayer));
+                                }
+                            }
+                        });
+                    }
+                } catch (InterruptedException e) {
+                }
+            }
+        };
+
+        thread2.start();
+
         if(playPause){
             findViewById(R.id.playPause).setBackgroundResource(R.drawable.pausebutton);
         }
@@ -176,6 +218,17 @@ public class Player extends BaseActivity  implements SongGetter {
         else {
             random = true;
             v.findViewById(R.id.player_random).setBackgroundResource(R.drawable.randomized);
+        }
+    }
+
+    public void onClickLoop(View v){
+        if(loop){
+            loop = false;
+            v.findViewById(R.id.player_loop).setBackgroundResource(R.drawable.loop);
+        }
+        else {
+            loop = true;
+            v.findViewById(R.id.player_loop).setBackgroundResource(R.drawable.looping);
         }
     }
 

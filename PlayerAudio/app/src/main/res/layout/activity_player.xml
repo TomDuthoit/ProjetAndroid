@@ -110,4 +110,14 @@
         android:onClick="onClickRandom"
         android:background="@drawable/random" />
 
+    <ImageButton
+        android:id="@+id/player_loop"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:layout_alignBottom="@+id/playPause"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="32dp"
+        android:background="@drawable/loop"
+        android:onClick="onClickLoop" />
+
 </RelativeLayout>

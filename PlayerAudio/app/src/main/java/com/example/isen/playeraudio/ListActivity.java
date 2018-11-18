@@ -71,11 +71,12 @@ public class ListActivity extends BaseActivity{
     }
 
     public void songPicked(View view){
+        songPlaying = currSong;
         currSong = songList.get(Integer.parseInt(view.getTag().toString()));
 
         Uri trackUri = ContentUris.withAppendedId(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
                 currSong.getID());
-        if(null!= mediaPlayer && songPlaying!=currSong){
+        if(null!= mediaPlayer && songPlaying.getID()!=currSong.getID()){
             mediaPlayer.stop();
             playPause = false;
             mediaPlayer = MediaPlayer.create(this,trackUri);
