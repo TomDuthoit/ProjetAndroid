@@ -33,6 +33,7 @@
         android:layout_height="74dp"
         android:layout_alignTop="@+id/playPause"
         android:layout_toStartOf="@+id/playPause"
+        android:onClick="onClickPrev"
         android:rotation="180"
         android:background="@drawable/nextbutton" />
 
@@ -42,6 +43,7 @@
         android:layout_height="74dp"
         android:layout_alignTop="@+id/playPause"
         android:layout_toEndOf="@+id/playPause"
+        android:onClick="onClickNext"
         android:background="@drawable/nextbutton" />
 
     <ImageView
@@ -97,5 +99,15 @@
         android:layout_marginBottom="130dp"
         android:text="@string/defaultArtist"
         android:textColor="@color/grisClair" />
+
+    <ImageButton
+        android:id="@+id/player_random"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:layout_alignBottom="@+id/playPause"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="32dp"
+        android:onClick="onClickRandom"
+        android:background="@drawable/random" />
 
 </RelativeLayout>

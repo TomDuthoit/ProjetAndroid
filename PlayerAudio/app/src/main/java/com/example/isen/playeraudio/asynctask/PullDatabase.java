@@ -27,6 +27,6 @@ public class PullDatabase extends AsyncTask<Integer,Void,List<Song>> {
     @Override
     protected void onPostExecute(List<Song> songs){
         super.onPostExecute(songs);
-        mlistener.onSongRetrived(songs);
+        mlistener.onSongRetrieved(songs);
     }
 }

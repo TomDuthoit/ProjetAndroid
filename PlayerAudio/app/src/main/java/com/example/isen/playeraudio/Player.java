@@ -1,6 +1,10 @@
 package com.example.isen.playeraudio;
 
+import android.content.ContentUris;
+import android.content.Context;
 import android.media.MediaPlayer;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -8,15 +12,28 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.isen.playeraudio.asynctask.PullDatabase;
 
-public class Player extends BaseActivity {
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Random;
+
+
+public class Player extends BaseActivity  implements SongGetter {
     protected Thread thread;
     protected SeekBar progressBar;
+    private List<Song> listSong;
+    private int songIndex;
+    public static boolean random = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_player);
+        PullDatabase pullDatabase = new PullDatabase(this);
+        pullDatabase.execute(0);
+
         mediaPlayer.start();
         playPause = true;
 
@@ -102,12 +119,81 @@ public class Player extends BaseActivity {
         }
     }
 
+    public void onClickNext(View v){
+        mediaPlayer.stop();
+        songIndex = findSongInList();
+        int adding = 1;
+        if(random){
+            Random r = new Random();
+            adding = r.nextInt(listSong.size()-1) +1;
+        }
+        if(songIndex+adding >= listSong.size()){
+            currSong = listSong.get(songIndex+adding-listSong.size());
+        }
+        else {
+            currSong = listSong.get(songIndex+adding);
+        }
+        Uri trackUri = ContentUris.withAppendedId(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
+                currSong.getID());
+        mediaPlayer = MediaPlayer.create(this,trackUri);
+        mediaPlayer.start();
+    }
+
+    public void onClickPrev(View v){
+        mediaPlayer.stop();
+        songIndex = findSongInList();
+        int subbing = 1;
+        if(random){
+            Random r = new Random();
+            subbing = r.nextInt(listSong.size()-1) +1;
+        }
+        if(songIndex - subbing < 0){
+            currSong = listSong.get(listSong.size()+songIndex-subbing);
+        }
+        else {
+            currSong = listSong.get(songIndex-subbing);
+        }
+        Uri trackUri = ContentUris.withAppendedId(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
+                currSong.getID());
+        mediaPlayer = MediaPlayer.create(this,trackUri);
+        mediaPlayer.start();
+    }
+
+    private Integer findSongInList(){
+        for(int i = 0; i<listSong.size();i++){
+            if(currSong.getID() == listSong.get(i).getID()){
+                return i;
+            }
+        }
+        return 0;
+    }
+
+    public void onClickRandom(View v){
+        if(random){
+            random = false;
+            v.findViewById(R.id.player_random).setBackgroundResource(R.drawable.random);
+        }
+        else {
+            random = true;
+            v.findViewById(R.id.player_random).setBackgroundResource(R.drawable.randomized);
+        }
+    }
+
     @Override
     protected void onStop() {
         super.onStop();
         /*if(mediaPlayer != null){
             mediaPlayer.stop();
         }*/
+    }
+    @Override
+    public void onSongRetrieved(List<Song> songs) {
+        listSong = songs;
+        Collections.sort(listSong, new Comparator<Song>(){
+            public int compare(Song a, Song b){
+                return a.getTitle().compareTo(b.getTitle());
+            }
+        });
     }
 }
 

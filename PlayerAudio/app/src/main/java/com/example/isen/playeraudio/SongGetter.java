@@ -4,5 +4,5 @@ import java.util.List;
 
 public interface SongGetter {
 
-    public void onSongRetrived(List<Song> songs);
+    public void onSongRetrieved(List<Song> songs);
 }

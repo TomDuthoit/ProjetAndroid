@@ -23,7 +23,7 @@ import java.util.List;
 import com.example.isen.playeraudio.asynctask.FillDatabase;
 import com.example.isen.playeraudio.asynctask.PullDatabase;
 
-public class ListActivity extends BaseActivity implements SongGetter{
+public class ListActivity extends BaseActivity{
     private static Context sContext;
     private ArrayList<Song> songList;
     private ListView songView;
@@ -57,8 +57,6 @@ public class ListActivity extends BaseActivity implements SongGetter{
         songView.setAdapter(musicAdt);
         FillDatabase fillDatabase = new FillDatabase();
         fillDatabase.execute(songList);
-        PullDatabase pullDatabase = new PullDatabase(this);
-        pullDatabase.execute(0);
 
     }
 
@@ -132,6 +130,8 @@ public class ListActivity extends BaseActivity implements SongGetter{
         }
     }
 
+    public static Context getContext(){return sContext;}
+
 
 
 
@@ -140,16 +140,5 @@ public class ListActivity extends BaseActivity implements SongGetter{
         /*stopService(playIntent);
         musicSrv=null;
         */super.onDestroy();
-    }
-    public static Context getContext(){return sContext;}
-    @Override
-    public void onSongRetrived(List<Song> songs) {
-
-        Context context = getApplicationContext();
-        CharSequence text = songs.get(0).getTitle();
-        int duration = Toast.LENGTH_SHORT;
-
-        Toast toast = Toast.makeText(context, text, duration);
-        toast.show();
     }
 }
