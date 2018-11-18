@@ -9,8 +9,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class SongAdapter extends BaseAdapter {
+public class SongAdapter extends BaseAdapter /*implements SongGetter*/ {
     private ArrayList<Song> musics;
     private LayoutInflater musicInf;
 
@@ -18,7 +19,15 @@ public class SongAdapter extends BaseAdapter {
         musics = songList;
         musicInf = LayoutInflater.from(c);
     }
-
+    /*@Override
+    public void onSongRetrived(List<Song> songs) {
+        // Set the adapter
+        final SongAdapter adapter = new TweetsAdapter(tweets);
+        adapter.setTweetListener(mListener);
+        mListView.setAdapter(adapter);
+        public static Context getContext() {
+            return sContext;
+        }*/
     @Override
     public int getCount() {
         return musics.size();

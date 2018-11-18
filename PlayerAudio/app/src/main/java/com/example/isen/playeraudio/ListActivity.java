@@ -1,32 +1,29 @@
 package com.example.isen.playeraudio;
 
 import android.Manifest;
-import android.content.ComponentName;
 import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
-import android.content.ServiceConnection;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import android.os.IBinder;
 import android.provider.MediaStore;
-import android.support.v7.app.AppCompatActivity;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import com.example.isen.playeraudio.SongService.MusicBinder;
-import com.example.isen.playeraudio.asynctask.FillDatabase;
+import java.util.List;
 
-public class ListActivity extends BaseActivity{
+import com.example.isen.playeraudio.asynctask.FillDatabase;
+import com.example.isen.playeraudio.asynctask.PullDatabase;
+
+public class ListActivity extends BaseActivity implements SongGetter{
     private static Context sContext;
     private ArrayList<Song> songList;
     private ListView songView;
@@ -60,6 +57,9 @@ public class ListActivity extends BaseActivity{
         songView.setAdapter(musicAdt);
         FillDatabase fillDatabase = new FillDatabase();
         fillDatabase.execute(songList);
+        PullDatabase pullDatabase = new PullDatabase(this);
+        pullDatabase.execute(0);
+
     }
 
     @Override
@@ -131,9 +131,8 @@ public class ListActivity extends BaseActivity{
             } while (musicCursor.moveToNext());
         }
     }
-    public static Context getContext() {
-        return sContext;
-    }
+
+
 
 
     @Override
@@ -141,5 +140,16 @@ public class ListActivity extends BaseActivity{
         /*stopService(playIntent);
         musicSrv=null;
         */super.onDestroy();
+    }
+    public static Context getContext(){return sContext;}
+    @Override
+    public void onSongRetrived(List<Song> songs) {
+
+        Context context = getApplicationContext();
+        CharSequence text = songs.get(0).getTitle();
+        int duration = Toast.LENGTH_SHORT;
+
+        Toast toast = Toast.makeText(context, text, duration);
+        toast.show();
     }
 }

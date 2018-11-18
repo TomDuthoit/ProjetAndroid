@@ -20,6 +20,6 @@ public interface DatabaseDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAll(ArrayList<Song> songs);
     @Delete
-    void delete(Song tweet);
+    void delete(Song song);
 
 }

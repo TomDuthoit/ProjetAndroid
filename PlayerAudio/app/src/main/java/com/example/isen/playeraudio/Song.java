@@ -9,7 +9,7 @@ import android.support.annotation.NonNull;
 public class Song {
 
 
-    @PrimaryKey
+    @NonNull @PrimaryKey
     private long id;
 
     @ColumnInfo(name = "title")
