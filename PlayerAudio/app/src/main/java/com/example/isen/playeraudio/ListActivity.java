@@ -1,7 +1,6 @@
 package com.example.isen.playeraudio;
 
 import android.Manifest;
-import android.arch.persistence.room.Room;
 import android.content.ComponentName;
 import android.content.ContentResolver;
 import android.content.ContentUris;
@@ -25,6 +24,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import com.example.isen.playeraudio.SongService.MusicBinder;
+import com.example.isen.playeraudio.asynctask.FillDatabase;
 
 public class ListActivity extends BaseActivity{
     private static Context sContext;
@@ -46,7 +46,7 @@ public class ListActivity extends BaseActivity{
             //return;
         }
 
-        DatabaseHelper db = new DatabaseHelper();
+        DatabaseHelper db = DatabaseHelper.getInstance();
         songView = findViewById(R.id.song_list);
         songList = new ArrayList<>();
         getSongList();
@@ -58,6 +58,8 @@ public class ListActivity extends BaseActivity{
 
         SongAdapter musicAdt = new SongAdapter(this, songList);
         songView.setAdapter(musicAdt);
+        FillDatabase fillDatabase = new FillDatabase();
+        fillDatabase.execute(songList);
     }
 
     @Override
